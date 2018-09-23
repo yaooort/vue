@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'></div>
+    
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 1.定义子组件
+        let Child = {
+            template: `
+            <div>
+                <div> 子组件显示==> {{dataSend}} </div>
+                <input v-model = 'dataSend' @input='changeValue(dataSend)'/>
+            </div>
+        `,
+            // 2.通过props接受所有自定义属性 dataSend 
+            props: ['dataSend'],
+            methods:{
+                changeValue(val){
+                    this.$emit('childHanlder', val)
+                }
+            }
+        }
+        // 2.定义父组件
+        let Parent = {
+            data() {
+                return {
+                    message: '这个是父组件数据'
+                }
+            },
+            components: {
+                Child
+            },
+            template: `
+            <div>
+                <input v-model = 'message'/>
+                <!-- 1.往子组件绑定自定义属性 dataSend -->
+                <Child :dataSend = 'message' @childHanlder = 'childHanlder'/>
+            </div>
+        `,
+            methods:{
+                childHanlder(val){
+                    this.message = val
+                }
+            }
+        }
+
+
+
+        let Root = {
+            components: {
+                Parent
+            },
+            template: `
+            <div>
+                <Parent/>
+            </div>
+        `
+        }
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+
+                }
+            },
+            components: {
+                Root
+            },
+            template: `
+          <Root/>
+       `
+        });
+    </script>
+</body>
+
+</html>

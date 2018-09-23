@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <!-- 引入vue -->
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <!-- 引入vue 路由 -->
+    <script src="./node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        var App = {
+            template: `
+            <div>
+                <router-link :to="{name:'home',params:{pagename:'home'}}">首页</router-link>
+                <router-link :to="{name:'hot',params:{pagename:'hot'}}">热点</router-link>
+                <keep-alive>
+                    <router-view></router-view>
+                </keep-alive>
+            </div>    
+            `
+        }
+
+        var HomeView = {
+            data() {
+                return {
+                    pagename: ''
+                }
+            },
+            template: `
+                <div>
+                    通用View{{pagename}}
+                    <h3 @click='clickHandler'>通用View{{pagename}}</h3>
+                </div>
+            `,
+            methods: {
+                clickHandler(e){
+                    e.target.style.color = 'red';
+                }
+            },
+            created() {
+                this.pagename = this.$route.params.pagename;
+            },
+            mounted () {
+                this.pagename = this.$route.params.pagename;
+            },
+            watch: {
+                '$route'(to, from) {
+                    console.log(to);
+                    console.log(from);
+                    this.pagename = to.params.pagename
+                }
+            }
+        }
+        var HotView = {
+            data() {
+                return {
+                    pagename: ''
+                }
+            },
+            template: `
+                <div>
+                    通用View{{pagename}}
+                    <h3 @click='clickHandler'>通用View{{pagename}}</h3>
+                </div>
+            `,
+            methods: {
+                clickHandler(e){
+                    e.target.style.color = 'red';
+                }
+            },
+            created() {
+                this.pagename = this.$route.params.pagename;
+            },
+            mounted () {
+                this.pagename = this.$route.params.pagename;
+            },
+            watch: {
+                '$route'(to, from) {
+                    console.log(to);
+                    console.log(from);
+                    this.pagename = to.params.pagename
+                }
+            }
+        }
+
+        const router = new VueRouter({
+            routes: [
+                {
+                    path: '/home/:pagename',
+                    name: 'home',
+                    component: HomeView,
+                },
+                {
+                    path: '/hot/:pagename',
+                    name: 'hot',
+                    component: HotView,
+                },
+            ]
+        });
+
+        new Vue({
+            el: '#app',
+            template: `
+                <App/>
+            `,
+            // 挂载路由
+            router: router,
+            components: {
+                App
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <input type="text" v-model='msg'>
+        <h2>{{ msg }}</h2>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data(){
+                return{
+                    msg:'这个是初始'
+                }
+            },
+        });
+    </script>
+
+</body>
+
+</html>

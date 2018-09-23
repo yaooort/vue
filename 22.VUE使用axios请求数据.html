@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/axios/dist/axios.js"></script>
+    <script>
+        Vue.prototype.$axios = axios;
+        var App = {
+            data() {
+                return {
+                    get: '',
+                    post: ''
+                }
+            },
+            template: `
+                <div>
+                    <button @click = 'startRequestGet'>GET请求</button>
+                    <h3>{{ get }}</h3>
+                    <button @click = 'startRequestPost'>GET请求</button>
+                    <h3>{{ post }}</h3>
+                </div>
+            `,
+            methods: {
+                /**
+                
+                服务端做相应的跨域设置
+
+                from flask_cors import CORS
+                app = Flask(__name__)
+                # 设置跨域
+                CORS(app)
+                */
+                startRequestGet() {
+                    this.$axios.get('http://127.0.0.1:5000/get')
+                        .then((response) => {
+                            console.log(response.data);
+                            this.get = response.data;
+                        }).catch((response) => {
+                            console.log(response);
+                        })
+                },
+                startRequestPost() {
+                    this.$axios.post('http://127.0.0.1:5000/add')
+                        .then((response) => {
+                            console.log(response.data);
+                            this.post = response.data;
+                        }).catch((response) => {
+                            console.log(response);
+                        })
+                }
+
+            }
+        };
+
+        var vue = new Vue({
+            el: '#app',
+            components: {
+                App
+            },
+            template: `
+                <App />
+            `
+        });
+        // Vue.use(axios);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        // 1.使用路由插件
+        Vue.use(VueRouter);
+        var Login = {
+            template: `
+                <h1>我是登录页面</h1>
+            `
+        }
+        var Reg = {
+            template: `
+                <h1>我是注册页面</h1>
+            `
+        }
+
+        // 创建路由
+        var router = new VueRouter({
+            routes: [
+                // 路由匹配规则
+                {
+                    path: '/login',
+                    name: 'login',
+                    component: Login
+                },
+                {
+                    path: '/reg',
+                    name: 'reg',
+                    component: Reg
+                }
+            ]
+        })
+
+        // 2.创建路由对象
+        var RouView = {
+            template: `
+                <div>
+                    <router-link :to="{name:'login'}">登录页面</router-link>
+                    <router-link :to="{name:'reg'}">注册页面</router-link>
+                    <router-view />
+                </div>
+            `
+        }
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+
+                }
+            },
+            // 挂载路由
+            router: router,
+            components: {
+                RouView
+            },
+            template: `
+                            <RouView></RouView>
+                    `
+        });
+    </script>
+</body>
+
+</html>

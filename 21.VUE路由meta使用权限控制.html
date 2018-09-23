@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 路由跳转 -->
+        <router-link to='home'>首页</router-link>
+        <!-- 路由跳转 -->
+        <router-link to='my'>我的文章</router-link>
+        <!-- 承载View -->
+        <router-view></router-view>
+    </div>
+
+    <!-- 引入vue -->
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <!-- 引入路由 -->
+    <script src="./node_modules/vue-router/dist/vue-router.js"></script>
+    <!-- 创建App -->
+    <script>
+        // 挂载原型链
+        Vue.use(VueRouter);
+        var HomeView = {
+            template: `<div>首页</div>`
+        }
+        var MyView = {
+            template: `<div>我的</div>`
+        }
+        var LoginView = {
+            data() {
+                return {
+                    name: '',
+                    pwd: ''
+                }
+            },
+            template: `
+            <div>
+                    <input type="text" v-model = 'name'>
+                    <input type="password" v-model = 'pwd'>
+                    <input type='button' value='登录' @click='login'>
+            </div>
+            `,
+            methods: {
+                login() {
+                    localStorage.setItem('token', this.name);
+                    this.$router.push({
+                        path: '/my'
+                    });
+                }
+            }
+        }
+
+        const router = new VueRouter({
+            routes: [{
+                path: '/',
+                redirect: '/home'
+            }, {
+                path: '/home',
+                component: HomeView
+            }, {
+                path: '/my',
+                component: MyView,
+                meta: {
+                    // 可以在这里存放自定义字段判断例如登录状态的token
+                    token: ''
+                }
+            }, {
+                path: '/login',
+                component: LoginView
+            }]
+        });
+        // 全局路由拦截中间件
+        router.beforeEach((to, from, next) => {
+            console.log(to);
+            console.log(from);
+            if (to.path === '/my') {
+                if (localStorage.getItem('token')) {
+                    // 已经登录
+                    next();
+                } else {
+                    // 未登录
+                    next({
+                        path: 'login'
+                    });
+                }
+            }else{
+                next();
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+
+                }
+            },
+            router
+
+        });
+    </script>
+</body>
+
+</html>

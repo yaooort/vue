@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .defult {
+            display: inline-block;
+            line-height: 1;
+            white-space: nowrap;
+            cursor: pointer;
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            border-color: #dcdfe6;
+            color: #606266;
+            -webkit-appearance: none;
+            text-align: center;
+            box-sizing: border-box;
+            outline: none;
+            margin: 0;
+            transition: .1s;
+            font-weight: 500;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            padding: 12px 20px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        .success {
+            color: #fff;
+            background-color: #67c23a;
+            border-color: #67c23a;
+        }
+
+        .warning {
+            color: #fff;
+            background-color: #e6a23c;
+            border-color: #e6a23c;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='app'></div>
+
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        Vue.component('Vbtn', {
+            template: `
+                <!-- 插槽slot 作为承载内容分发 :class的意思是绑定type数据到class 不同于前面的defult-->
+                <button class='defult' :class='type' ><slot/></button>
+            `,
+            props: ['type']
+        });
+
+        var Header = {
+            template: `
+                <div>这个是头部
+                    <Vbtn type = 'success'>头部按钮</Vbtn>
+                </div>
+            `
+        }
+
+        var Content = {
+            template: `
+                <div>这个是内容
+                    <Vbtn type = 'warning'>内容按钮</Vbtn>
+                </div>
+            `
+        }
+
+        var App = {
+            components: {
+                Header,
+                Content
+            },
+            template: `
+                <div>
+                    <Header/>
+                    <Content/>
+                </div>
+            `
+        };
+
+        new Vue({
+            el: '#app',
+            components: {
+                App
+            },
+            template: `
+
+            <div>
+                <App/>
+            </div>
+
+        `
+        });
+    </script>
+</body>
+
+</html>

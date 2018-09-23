@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id = 'app'>
+
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+
+    <script>
+
+    // 头部组件
+    var Header = {
+        template:`
+            <div>头部组件</div>
+        `
+    }
+
+    // 头部组件
+    var Sider = {
+        template:`
+            <div>侧边栏</div>
+        `
+    }
+
+    // 头部组件
+    var Content = {
+        template:`
+            <div>内容区</div>
+        `
+    }
+
+    // root App对象
+    new new Vue({
+       el:'#app',
+       data(){
+           return{
+
+           }
+       } ,
+       components: {
+        Header,Sider,Content
+       },
+       template:`
+          <div>
+            <Header/>
+            <Sider/>
+            <Content/>
+          </div>
+       `
+    });
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+
+        Vue.component('Glfote',{
+            template:`<div class='cj'></div>`
+        });
+
+        var APP = {
+            template: `<div class = 'classDiv'> 
+                    <button ref = 'cbtn'>这个按钮</button>
+                    <Glfote ref = 'dlfo'/>
+                  </div>`,
+
+            created() {
+                console.log(this.$refs.cbtn);
+            },
+            beforeMount() {
+                console.log(this.$refs.cbtn);
+            },
+            mounted() {
+                console.log(this.$refs.cbtn);
+                console.log(this.$refs.dlfo.$el);
+            },
+        }
+
+        new Vue({
+            el: '#app',
+            components: {
+                APP
+            },
+            template: `
+            <APP />
+        `
+        });
+    </script>
+</body>
+
+</html>

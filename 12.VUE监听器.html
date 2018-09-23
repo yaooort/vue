@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="msg">
+        <h2>{{ msg }}</h2>
+        <div>
+            {{ html }}
+        </div>
+        <button @click="dataMap[0].name='网吧'"></button>
+        <h4>{{ dataMap[0].name }}</h4>
+        {{ mapW }}
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg: '',
+                    html: '',
+                    dataMap: [{
+                        name: 'Jack'
+                    }],
+                    mapW: []
+                }
+            },
+            watch: {
+                msg: function (newV, oldV) {
+                    this.html += '\n' + newV + '===>' + oldV;
+                },
+                dataMap: {
+                    deep: true,//深度监听
+                    handler: function (newMap, oldMap) {
+                        this.mapW = newMap;
+                        console.log(newMap[0].name);
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

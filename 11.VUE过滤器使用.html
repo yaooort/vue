@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+
+    <script>
+        // 全局过滤器
+        Vue.filter('myReverse', function (value, args) {
+            return value.split('').reverse().join('') + "===" + args;
+        });
+
+        // 自定义局部组件
+        var ViVi = {
+            data() {
+                return {
+                    inpu: '',
+                    msg: '这个是H3'
+                }
+            },
+            template: `
+                <div>
+                    <input type='number' v-model='inpu'/>
+                    <h1>{{ inpu | cutormb }}</h1>
+                    <h3>{{ msg | myReverse('拼接的字符串') | cutormb}}</h3>
+                </div>
+
+            `,
+            // 创建局部过滤器
+            filters: {
+                cutormb: function (vb) {
+                    return '￥' + vb
+                }
+            }
+        }
+
+        new Vue({
+            el: '#app',
+            template: ` <ViVi/> `,
+            components: {
+                ViVi
+            }
+        });
+    </script>
+</body>
+
+</html>

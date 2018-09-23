@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <!-- 引入vue -->
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <!-- 引入vue 路由 -->
+    <script src="./node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        var App = {
+            template: `
+            <div>
+                <router-link :to="{name:'pageAll',params:{pagename:'home'}}">首页</router-link>
+                <router-link :to="{name:'pageAll',params:{pagename:'hot'}}">热点</router-link>
+                <router-view></router-view>
+            </div>    
+            `
+        }
+
+        var ShowView = {
+            data() {
+                return {
+                    pagename: ''
+                }
+            },
+            template: `
+                <div>
+                    通用View{{pagename}}
+                </div>
+            `,
+            created() {
+                this.pagename = this.$route.params.pagename;
+            },
+            watch: {
+                '$route'(to, from) {
+                    console.log(to);
+                    console.log(from);
+                    this.pagename = to.params.pagename
+                }
+            }
+        }
+
+        const router = new VueRouter({
+            routes: [{
+                path: '/pageAll/:pagename',
+                name: 'pageAll',
+                component: ShowView,
+            }]
+        });
+
+        new Vue({
+            el: '#app',
+            template: `
+                <App/>
+            `,
+            // 挂载路由
+            router: router,
+            components: {
+                App
+            }
+        });
+    </script>
+</body>
+
+</html>

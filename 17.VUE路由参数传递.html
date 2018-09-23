@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        // 1.使用路由插件
+        Vue.use(VueRouter);
+        var User1 = {
+            data() {
+                return {
+                    userId: 0
+                }
+            },
+            template: `
+                <h1>我是用户1 id = {{userId}}</h1>
+            `,
+            created() {
+                console.log(this.$route.params.id);
+                this.userId = this.$route.params.id;
+            }
+        }
+        var User2 = {
+            data() {
+                return {
+                    userId: 0
+                }
+            },
+            template: `
+                <h1>我是用户2 id = {{ userId }}</h1>
+            `,
+            created() {
+                console.log(this.$route.query.userId);
+                this.userId = this.$route.query.userId;
+            }
+        }
+        // 创建路由
+        var router = new VueRouter({
+            routes: [
+                // 路由匹配规则
+                {
+                    path: '/user/:id',
+                    name: 'userA',
+                    component: User1
+                },
+                {
+                    path: '/user',
+                    name: 'userB',
+                    component: User2
+                }
+            ]
+        })
+
+        // 2.创建路由对象
+        var RouView = {
+            template: `
+                <div>
+                    <router-link :to="{name:'userA',params:{id:100}}">用户1</router-link>
+                    <router-link :to="{name:'userB',query:{userId:111}}">用户2</router-link>
+                    <router-view />
+                </div>
+            `
+        }
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+
+                }
+            },
+            // 挂载路由
+            router: router,
+            components: {
+                RouView
+            },
+            template: `
+                            <RouView></RouView>
+                    `
+        });
+    </script>
+</body>
+
+</html>

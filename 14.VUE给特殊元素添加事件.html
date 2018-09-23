@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app" v-show = 'isShow'></div>
+
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        var Deep = {
+            data() {
+                return { 
+                    isShow: false
+                }
+            },
+            template: ` <div class = 'decu'>
+                            <input type="text" v-show='isShow'  ref = 'input_abc'/>
+                        </div>`,
+            mounted() {
+                this.isShow = true;
+                // 特殊情况刷新完DOM。这个时候还不能及时调用到DOM对象的属性
+                // 这个时候需要借助nextTick方法回调获取准确的DOM刷新完成之后的对象
+                this.$nextTick(function () {
+                    this.$refs.input_abc.focus();
+                });
+            },
+        }
+
+        new Vue({
+            el: '#app',
+            components: {
+                Deep
+            },
+            template: `<Deep />`
+        });
+    </script>
+</body>
+
+</html>
