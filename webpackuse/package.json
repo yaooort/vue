@@ -1,0 +1,20 @@
+{
+  "name": "webpackuse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "build": "./node_modules/.bin/webpack ./app/main.js",
+    "dev": "./node_modules/.bin/webpack --config ./webpack.config.dev.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.5.17"
+  },
+  "devDependencies": {
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.1"
+  }
+}
