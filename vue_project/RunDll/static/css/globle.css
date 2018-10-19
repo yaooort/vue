@@ -1,0 +1,26 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  padding-top: 48px;
+  width: 100%;
+  height: 100%;
+  overflow: auto
+}
